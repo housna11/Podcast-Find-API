@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\PodcastController;
+use App\Http\Controllers\EpisodeController;
 
 
 /*
@@ -23,4 +25,10 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/resetPassword',[AuthController::class, 'resetPassword']);
+    Route::get('/podcasts',[PodcastController::class, 'index']);
+    Route::get('/podcasts/{id}',[PodcastController::class, 'show']);
+    Route::get('/podcast/{podcast_id}/episodes',[EpisodeController::class, 'index']);
+    Route::get('/episodes/{id}',[EpisodeController::class, 'show']);
+
 });

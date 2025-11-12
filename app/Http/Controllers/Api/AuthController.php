@@ -65,4 +65,24 @@ class AuthController extends Controller
             'message' => 'Déconnexion réussie',
         ]);
     }
+
+     public function resetPassword(Request $request)
+    {
+            $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',   
+        ]);
+
+        $user = $request->user(); 
+
+        if (! Hash::check($request->old_password, $user->password)) {
+            return response()->json(['message' => 'Ancien mot de passe incorrect'], 400);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return response()->json(['message' => 'Mot de passe réinitialisé avec succès']);
+    }
 }

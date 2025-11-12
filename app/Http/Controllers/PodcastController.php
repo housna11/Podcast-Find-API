@@ -13,7 +13,7 @@ class PodcastController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Podcast::all());
     }
 
     /**
@@ -21,15 +21,16 @@ class PodcastController extends Controller
      */
     public function store(StorePodcastRequest $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Podcast $podcast)
+    public function show($id)
     {
-        //
+        $podcast = Podcast::findOrFail($id);
+        return response()->json($podcast);
     }
 
     /**

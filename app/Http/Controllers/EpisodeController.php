@@ -11,9 +11,10 @@ class EpisodeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($podcast_id)
     {
-        //
+        $episodes = Episode::where('podcast_id', $podcast_id)->get();
+        return response()->json($episodes);
     }
 
     /**
@@ -27,9 +28,10 @@ class EpisodeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Episode $episode)
+    public function show($id)
     {
-        //
+        $episode = Episode::findOrFail($id);
+        return response()->json($episode);
     }
 
     /**
