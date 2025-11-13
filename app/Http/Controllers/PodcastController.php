@@ -6,6 +6,7 @@ use App\Models\Podcast;
 use App\Http\Requests\StorePodcastRequest;
 use App\Http\Requests\UpdatePodcastRequest;
 
+
 class PodcastController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class PodcastController extends Controller
      */
     public function store(StorePodcastRequest $request)
     {
-        
+       
     }
 
     /**
