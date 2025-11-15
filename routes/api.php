@@ -30,6 +30,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/resetPassword',[AuthController::class, 'resetPassword']);
     Route::get('/podcasts',[PodcastController::class, 'index']);
     Route::get('/podcasts/{id}',[PodcastController::class, 'show']);
+    Route::post('/podcasts', [PodcastController::class, 'store']);
+    Route::put('/podcasts/{podcast}', [PodcastController::class, 'update']);
+    Route::delete('/podcasts/{podcast}', [PodcastController::class, 'destroy']);
     Route::get('/podcast/{podcast_id}/episodes',[EpisodeController::class, 'index']);
     Route::get('/episodes/{id}',[EpisodeController::class, 'show']);
     Route::get('/users', [UserController::class, 'index']);

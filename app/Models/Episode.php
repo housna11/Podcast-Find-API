@@ -9,7 +9,7 @@ use App\Models\Podcast;
 class Episode extends Model
 {
     use HasFactory;
-    protected $fillibale = [
+    protected $fillable = [
        'titre',
        'description',
        'audio',

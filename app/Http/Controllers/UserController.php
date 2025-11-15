@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
+
+
 
 
 class UserController extends Controller
@@ -15,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        Gate::authorize('gerer_users', User::class);
+        Gate::authorize('gerer_users');
         return response()->json(User::all());
     }
 
@@ -24,7 +27,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        Gate::authorize('create', User::class);
+
+        Gate::authorize('gerer_users');
 
         $request->validate([
             'nom' => 'required|string|max:255',
@@ -57,7 +61,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        Gate::authorize('update', $user);
+        Gate::authorize('gerer_users');
 
         $request->validate([
             'nom' => 'sometimes|string|max:255',
@@ -77,7 +81,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Gate::authorize('delete', $user);
+        Gate::authorize('gerer_users');
         $user->delete();
 
         return response()->json(['message' => 'Utilisateur supprimé']);

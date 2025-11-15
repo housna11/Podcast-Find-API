@@ -23,7 +23,7 @@ class AuthController extends Controller
             'prenom' => $request->prenom,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'utilisateur',
+            'role' => 'administrateur',
         ]);
 
         $token = $user->createToken('token')->plainTextToken;

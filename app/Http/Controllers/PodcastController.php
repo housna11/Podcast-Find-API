@@ -22,7 +22,27 @@ class PodcastController extends Controller
      */
     public function store(StorePodcastRequest $request)
     {
-       
+        Gate::authorize('gerer_podcasts');
+
+        $request->validate([
+            'titre' => 'required|string|max:255',
+            'categorie' => 'required|string|max:255',
+            'animateur' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'sometimes|string',
+        ]);
+
+        $podcast = Podcast::create([
+            'titre' => $request->titre,
+            'categorie' => $request->categorie,
+            'animateur' => $request->animateur,
+            'description' => $request->description,
+            'image' => $request->image,
+            'user_id' => auth()->id(),
+        ]);
+
+        return response()->json($podcast);
+
     }
 
     /**
@@ -39,7 +59,24 @@ class PodcastController extends Controller
      */
     public function update(UpdatePodcastRequest $request, Podcast $podcast)
     {
-        //
+        Gate::authorize('gerer_podcasts', $podcast); 
+
+        $request->validate([
+            'titre' => 'sometimes|string|max:255',
+            'categorie' => 'sometimes|string|max:255',
+            'animateur' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'image' => 'sometimes|string', 
+        ]);
+         $podcast->update($request->only([
+        'titre',
+        'categorie',
+        'animateur',
+        'description',
+        'image',
+    ]));
+
+    return response()->json($podcast);
     }
 
     /**
@@ -47,6 +84,10 @@ class PodcastController extends Controller
      */
     public function destroy(Podcast $podcast)
     {
-        //
+        Gate::authorize('gerer_podcasts', $podcast); 
+
+        $podcast->delete();
+        return response()->json(['message' => 'Podcast supprimé']);
     }
+    
 }

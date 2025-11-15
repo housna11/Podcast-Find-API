@@ -11,7 +11,7 @@ use App\Models\Episode;
 class Podcast extends Model
 {
     use HasFactory;
-    protected $fillibale =[
+    protected $fillable =[
       'titre',
       'categorie',
       'animateur',
