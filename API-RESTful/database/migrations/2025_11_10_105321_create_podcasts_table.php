@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->string('categorie');
-            $table->string('description');
+            $table->text('description');
+            $table->string('animateur')->nullable();
+            $table->string('image')->nullable();
+            $table->boolean('test');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('image');
             $table->timestamps();
         });
     }

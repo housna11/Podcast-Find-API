@@ -4,63 +4,37 @@ namespace App\Policies;
 
 use App\Models\Episode;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class EpisodePolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
-        //
+        return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Episode $episode): bool
+    public function view(?User $user, Episode $episode): bool
     {
-        //
+        return true;
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'animateur' || $user->role === 'administrateur';
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
     public function update(User $user, Episode $episode): bool
     {
-        //
+        if (!$episode->podcast) {
+            return false;
+        }
+        return $user->role === 'administrateur' || $user->id === $episode->podcast->user_id;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
     public function delete(User $user, Episode $episode): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Episode $episode): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Episode $episode): bool
-    {
-        //
+        if (!$episode->podcast) {
+            return false;
+        }
+        return $user->role === 'administrateur' || $user->id === $episode->podcast->user_id;
     }
 }

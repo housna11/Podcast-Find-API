@@ -7,7 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use\App\Models\Podcast;
+use App\Models\Podcast;
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     schema="User",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="first_name", type="string", example="Housna"),
+ *     @OA\Property(property="last_name", type="string", example="Fathi"),
+ *     @OA\Property(property="email", type="string", example="housna@example.com"),
+ *     @OA\Property(property="role", type="string", example="animateur")
+ * )
+ */
 
 
 class User extends Authenticatable
@@ -48,7 +61,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function podcast(){
+    public function podcasts(){
         return $this->hasMany(Podcast::class);
     }
 }
